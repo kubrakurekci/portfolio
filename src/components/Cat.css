@@ -1,0 +1,120 @@
+:root {
+    --catColor: #000;
+    --tagColor: #fb0;
+    --earColor: #f30;
+    --colColor: #f00;
+    --pupColor: #fff;
+}
+.container {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    transform-origin: center;
+    width: 1000px;
+    height: 1000px;
+    pointer-events: none;
+    left: 100%;
+    transform: translateX(-50%) scale(0.25);
+}
+.face {
+    position: absolute;
+    background-color: var(--catColor);
+    height: 7.5em;
+    width: 15em;
+    bottom: 8.18em;
+    left: -3.62em;
+    border-radius: 3.75em;
+}
+.eyes {
+    display: flex;
+    gap: 1em;
+    position: absolute;
+    top: 1.6em;
+    left: 1.5em;
+}
+
+.eye {
+    width: 5em;
+    height: 3.75em;
+    background-color: var(--pupColor);
+    border-radius: 1.87em;
+    position: relative;
+    overflow: hidden;
+}
+
+.pupil {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.6em;
+    height: 1.6em;
+    background-color: #000;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.06s linear;
+}
+
+.whiskers,
+.whiskers:before,
+.whiskers:after {
+    position: absolute;
+    height: 0.62em;
+    width: 18.75em;
+    background-color: var(--catColor);
+    border-radius: 0.31em;
+}
+
+.whiskers {
+    bottom: 12em;
+    left: -5.5em;
+}
+.whiskers::after {
+    position: absolute;
+    content: "";
+    transform: rotate(-14deg);
+}
+.whiskers::before {
+    position: absolute;
+    content: "";
+    transform: rotate(14deg);
+}
+.ear-l {
+    height: 0;
+    width: 0;
+    border-bottom: 3.12em solid var(--catColor);
+    border-left: 1.56em solid transparent;
+    border-right: 1.56em solid transparent;
+    position: absolute;
+    bottom: 7.37em;
+    left: 3.12em;
+}
+
+.ear-r {
+    height: 0;
+    width: 0;
+    border-bottom: 3.12em solid var(--catColor);
+    border-right: 1.56em solid transparent;
+    border-left: 1.56em solid transparent;
+    position: absolute;
+    bottom: 7.37em;
+    left: 8.75em;
+}
+
+.ear-l:before,
+.ear-r:before {
+    position: absolute;
+    content: "";
+    height: 0;
+    width: 0;
+    border-bottom: 1.37em solid var(--earColor);
+    border-left: 0.75em solid transparent;
+    border-right: 0.75em solid transparent;
+    left: -0.68em;
+    top: 1.56em;
+}
+@media screen and (min-width: 600px) {
+    .container {
+        font-size: 1.2em;
+    }
+}
+
