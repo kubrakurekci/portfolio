@@ -27,7 +27,7 @@ function ProjectsCursorEffect() {
 
       setTimeout(() => {
         circle.remove();
-      }, 100);
+      }, 2800);
     };
 
     container.addEventListener("mousemove", handleMouseMove);
