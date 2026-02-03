@@ -1,49 +1,88 @@
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import { useTranslation } from "react-i18next";
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import educationData from "../locales/tr.json";
+import EducationTitle from "./EducationTİtle";
+gsap.registerPlugin(ScrollTrigger);
 
-export default function OutlinedTimeline() {
-    const { t } = useTranslation();
+function Timeline() {
+  const containerRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.set(".card-1", {
+        x: 0,
+        opacity: 1,
+        zIndex: 1,
+      });
+      gsap.set(".card-2", {
+        x: 400,
+        opacity: 0,
+        zIndex: 2,
+      });
+      gsap.set(".card-3", {
+        x: -400,
+        opacity: 0,
+        zIndex: 3,
+      });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "+=2000",
+          scrub: true,
+          pin: true,
+        },
+      });
+      tl.to(".card-2", {
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+      });
+      tl.to(".card-3", {
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <Timeline position="alternate">
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot variant="outlined" />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>
-          <h1 className='timeline-content-university'>{t("education.0.university")}</h1>
-          <h2 className='timeline-content-field'>{t("education.0.field")}</h2>
-          <p className='timeline-content-degree'>{t("education.0.degree")}</p>
-          <p className='timeline-content-class'>{t("education.0.class")}</p>
-          <p className='timeline-content-gno'>{t("education.0.gno")}</p>
-          <p className='timeline-content-year'>{t("education.0.year")}</p>
-        </TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot variant="outlined" color="primary" />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Code</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot variant="outlined" color="secondary" />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Sleep</TimelineContent>
-      </TimelineItem>
-      <TimelineItem>
-        <TimelineSeparator>
-          <TimelineDot variant="outlined" />
-        </TimelineSeparator>
-        <TimelineContent>Repeat</TimelineContent>
-      </TimelineItem>
-    </Timeline>
+    <div>
+      <EducationTitle />
+      <div className="timeline-container" ref={containerRef}>
+        {educationData.education.items.map((item, index) => (
+          <div
+            key={item.id}
+            className={`card card-${index + 1}`}
+            style={{
+              backgroundImage: `url(${item.bg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <div
+              className="education-info"
+              style={{
+                backgroundColor: item.cardColor,
+              }}
+            >
+              <h2 className="text-4xl">{item.university}</h2>
+              <p className="text-3xl">{item.field}</p>
+              <p className="text-2xl">{item.degree}</p>
+              <p className="text-xl">{item.class}</p>
+              <p className="text-lg">GNO: {item.gno}</p>
+              <p className="text-base">{item.year}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
+
+export default Timeline;

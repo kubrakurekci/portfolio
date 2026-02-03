@@ -1,0 +1,39 @@
+.projects-section {
+    position: relative;
+    min-height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+    border-radius: 24px 24px 0 0;
+}
+
+.projects-circle {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    background: linear-gradient(45deg, aqua, salmon);
+    transform: translate(-50%, -50%);
+    animation: projects-animate 1.8s linear forwards;
+    z-index: 1;
+}
+.card-projects{
+    margin: 54px;
+    width: 250px;
+    height: 100px;
+}
+
+@keyframes projects-animate {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(calc(-50% + 40px),
+                -900%) scale(0.6);
+        opacity: 0;
+    }
+}
+.card-projects{
+    position: relative;
+    z-index: 10;
+}

@@ -1,89 +1,77 @@
-import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { useTranslation } from "react-i18next";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useLayoutEffect, useRef } from "react";
+import video from "/assets/video.mp4"
 
 function Hero() {
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const { t, i18n } = useTranslation();
-  const ctxRef = useRef(null);
+ gsap.registerPlugin(SplitText, ScrollTrigger);
 
-  useEffect(() => {
-    ctxRef.current = gsap.context(() => {
-      if (titleRef.current) {
-        const titleText = titleRef.current.textContent || '';
-        const titleWords = titleText.split(' ');
-        titleRef.current.innerHTML = '';
-        titleWords.forEach((word, index) => {
-          const span = document.createElement('span');
-          span.style.display = 'inline-block';
-          span.style.opacity = '0';
-          span.style.transform = 'translateX(-50px)';
-          span.textContent = word;
-          titleRef.current.appendChild(span);
+ const quoteRef = useRef(null);
+ const containerRef = useRef(null);
+ const splitTextRef = useRef(null);
 
-          if (index < titleWords.length - 1) {
-            const space = document.createTextNode(' ');
-            titleRef.current.appendChild(space);
-          }
-        });
+ useLayoutEffect(() => {
+   if (!quoteRef.current || !containerRef.current) return;
+   splitTextRef.current?.revert();
+   splitTextRef.current = new SplitText(quoteRef.current, {
+     type: "lines",
+     linesClass: "line",
+   });
 
-        const titleSpans = titleRef.current.querySelectorAll('span');
-        if (titleSpans.length > 0) {
-          gsap.to(titleSpans, {
-            x: 0,
-            opacity: 1,
-            stagger: 0.05,
-            duration: 0.8,
-            ease: "power3.out",
-          });
-        }
-      }
-      if (subtitleRef.current) {
-        const subtitleText = subtitleRef.current.textContent || '';
-        const subtitleWords = subtitleText.split(' ');
-        subtitleRef.current.innerHTML = '';
-        subtitleWords.forEach((word, index) => {
-          const span = document.createElement('span');
-          span.style.display = 'inline-block';
-          span.style.opacity = '0';
-          span.style.transform = 'translateX(-50px)';
-          span.textContent = word;
-          subtitleRef.current.appendChild(span);
-          if (index < subtitleWords.length - 1) {
-            const space = document.createTextNode(' ');
-            subtitleRef.current.appendChild(space);
-          }
-        });
-        const subtitleSpans = subtitleRef.current.querySelectorAll('span');
-        if (subtitleSpans.length > 0) {
-          gsap.to(subtitleSpans, {
-            x: 0,
-            opacity: 1,
-            stagger: 0.05,
-            duration: 0.8,
-            ease: "power3.out",
-            delay: 0.3,
-          });
-        }
-      }
-    });
-    
-    return () => {
-      if (ctxRef.current) {
-        ctxRef.current.revert();
-      }
-    };
-  }, [i18n.language]);
+   gsap.set(quoteRef.current, { perspective: 400 });
+
+   gsap.set(splitTextRef.current.lines, {
+     opacity: 0,
+     x: -60,
+   });
+
+   const tl = gsap.timeline({
+     scrollTrigger: {
+       trigger: containerRef.current,
+       start: "top 80%",
+       end: "top 30%",
+       toggleActions: "play none none reverse",
+       invalidateOnRefresh: true, 
+       markers: false,
+     },
+     defaults: {
+       ease: "expo.out",
+     },
+   });
+
+   tl.to(splitTextRef.current.lines, {
+     opacity: 1,
+     x: 0,
+     duration:8, 
+     stagger: 0.12,
+   });
+
+   ScrollTrigger.refresh();
+
+   return () => {
+     splitTextRef.current?.revert();
+     ScrollTrigger.getAll().forEach((t) => t.kill());
+   };
+ }, []);
 
   return (
-    <div className="hero-text text-xl text-white text-center">
-      <h1 ref={titleRef} className="text-5xl font-bold mb-4">
-        {t("hero.title")}
-      </h1>
-      <p ref={subtitleRef} className="text-2xl">
-        {t("hero.subtitle")}
-      </p>
+    <div className="hero min-h-screen bottom-10" ref={containerRef}>
+      <video className="videoTag" autoPlay loop muted>
+        <source src={video} type="video/mp4" />
+      </video>
+      <div id="demo" className="w-full max-w-4xl mx-auto px-4 py-20">
+        <div id="quote" ref={quoteRef} className="text-center">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+            Welcome to My Portfolio
+          </h1>
+          <p className="text-xl md:text-2xl leading-relaxed">
+            Hi! I'm Kübra, a passionate Frontend Developer specializing in
+            creating beautiful and functional web experiences. Explore my
+            projects and skills below.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

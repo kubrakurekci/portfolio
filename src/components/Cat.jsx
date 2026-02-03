@@ -48,7 +48,7 @@ function Cat() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container-cat">
       <div className="cat">
         <div className="whiskers"></div>
 

@@ -1,40 +1,49 @@
 {
   "hero": {
     "title": "Merhaba, Ben Kübra",
-    "subtitle": "Frontend Geliştiriciyim."
+    "subtitle": "Frontend Geliştirici"
   },
   "nav": {
-    "home": "Anasayfa",
+    "home": "Ana Sayfa",
     "projects": "Projeler",
     "contact": "İletişim"
   },
-  "education": [
-    {
-      "id": 1,
-      "university": "Anadolu Üniversitesi",
-      "degree": "Lisans",
-      "field": "Yönetim Bilişim Sistemleri",
-      "class":"3. Sınıf",
-      "gno":"3.29/4.00",
-      "year":"2025 - Devam Ediyor"
-    },
-    {
-      "id": 2,
-      "university": "İstanbul Üniversitesi",
-      "degree": "Önlisans",
-      "field": "Web Tasarım ve Kodlama",
-      "class":"Mezun",
-      "gno":"3.29/4.00",
-      "year":"2023-2025"
-    },
-    {
-      "id": 3,
-      "university": "Kocaeli Üniversitesi",
-      "degree": "Önlisans",
-      "field": "Tıbbi Laboratuvar Teknikleri",
-      "class":"Mezun",
-      "gno":"3.39/4.00",
-      "year":"2019-2021"
-    }
-  ]
+  "education": {
+    "title": "Eğitim",
+    "items": [
+      {
+        "id": 1,
+        "university": "Kocaeli Üniversitesi",
+        "degree": "Önlisans Derecesi",
+        "field": "Tıbbi Laboratuvar Teknikleri",
+        "class": "Mezun",
+        "gno": "3.39/4.00",
+        "year": "2019-2021",
+        "bg":"/assets/koü.jpeg",
+        "cardColor":"#02b95d90"
+      },
+      {
+        "id": 2,
+        "university": "İstanbul Üniversitesi",
+        "degree": "Önlisans Derecesi",
+        "field": "Web Tasarım ve Kodlama",
+        "class": "Mezun",
+        "gno": "3.29/4.00",
+        "year": "2023-2025",
+        "bg": "/assets/iü.jpg",
+        "cardColor": "#F1C91290"
+      },
+      {
+        "id": 3,
+        "university": "Anadolu Üniversitesi",
+        "degree": "Lisans Derecesi",
+        "field": "Yönetim Bilişim Sistemleri",
+        "class": "3. Sınıf",
+        "gno": "3.29/4.00",
+        "year": "2025 - Devam",
+        "bg": "/assets/aöf.jpg",
+        "cardColor": "#9D202090"
+      }
+    ]
+  }
 }
